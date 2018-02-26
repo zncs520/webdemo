@@ -195,19 +195,6 @@ return $arrdata;
 }
 
 
-function get_data($arr){
-for ($x=0; $x<count($arr); $x++) {
-
-if (isset($REC[$arr[$x]])){
-$arrdata[$arr[$x]]=$REC[$arr[$x]];
-}
-
-
-}
-return $arrdata;
-}
-
-
 
 function authcode($string,$operation,$key='zncs2018'){
 //函数encrypt($string,$operation,$key)中$string：需要加密解密的字符串；$operation：判断是加密还是解密，E表示加密，D表示解密；$key：密匙。
@@ -247,8 +234,6 @@ return str_replace('=','',base64_encode($result));
 }
 
 
-
-
 //加密
 //$psa=authcode('{"powertype":"user","uid":"1","extime":"'.time().'"}');
 //echo urlencode($psa).'<br/>';
@@ -286,11 +271,6 @@ $ip = getenv("REMOTE_ADDR");
 else $ip = "Unknow";
 return $ip;
 }
-
-
-
-
-
 
 
 
