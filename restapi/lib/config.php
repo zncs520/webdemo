@@ -185,17 +185,16 @@ return $html;
 
 
 
-function post_data($arr){
+function post_data($arr){//取数组中所需的字段
 for ($x=0; $x<count($arr); $x++) {
-
 if (isset($REC[$arr[$x]])){
 $arrdata[$arr[$x]]=$REC[$arr[$x]];
 }
-
-
 }
 return $arrdata;
 }
+
+
 function get_data($arr){
 for ($x=0; $x<count($arr); $x++) {
 
