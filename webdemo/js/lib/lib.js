@@ -59,8 +59,8 @@ if (typeof(value[key]) == "undefined" ||  value[key]==""){
 //return(key+':'+check[key]);
 res["success"]=false;
 res["info"]= "请填写"+check[key];
+}
+}
 return res;
-}
-}
 }
 
