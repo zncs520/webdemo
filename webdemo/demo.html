@@ -77,7 +77,7 @@ msg(store.get('user').nickname);
 <input name="name" value="" ><br />
 </form>
 
-
+<div id="uc">{{id}}</div>
 
 <script type="text/javascript">
 
@@ -93,6 +93,12 @@ if(a.success){
 msg(a.info);
 }
 
+    
+var ucenter = new Vue({
+el: '#uc',
+data: {id:23232}
+});
+    
 
 </script>
 
