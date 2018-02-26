@@ -10,7 +10,7 @@ return true;
 }
 
 function upimg($k,$upload_path,$uploadfile_name){
-$file = $_FILES[$k];//得到传输的数据
+$file = $_FILES[$k];//得到传输的数据 
 //得到文件名称
 $name = $file['name'];
 $type = strtolower(substr($name,strrpos($name,'.')+1)); //得到文件类型，并且都转化成小写
