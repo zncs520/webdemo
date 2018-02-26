@@ -86,4 +86,9 @@ return result ? decodeURIComponent(result[2]) : null;
 }
 
 
-
+//vue解析数组
+function vmup(vm, jdata) {
+for(var o in jdata) {
+Vue.set(vm, o, jdata[o]);
+}
+}
