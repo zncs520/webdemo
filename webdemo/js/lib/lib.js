@@ -92,3 +92,27 @@ for(var o in jdata) {
 Vue.set(vm, o, jdata[o]);
 }
 }
+
+
+
+function add(id) {//加减input数值
+var a = document.getElementById(id).value;
+a++;
+document.getElementById(id).value = a;
+}
+function sub(id) {
+var b = document.getElementById(id).value;
+b--;
+document.getElementById(id).value = b;
+}
+
+
+
+function setTab(cursel, total, name) {//标题切换内容
+for(i = 1; i <= total; i++) {
+var con = document.getElementById(name + "tab_" + i);
+console.log(con)
+con.style.display = i == cursel ? "block" : "none";
+//con.style.display=i==cursel?"block":"none";
+}
+}
