@@ -140,6 +140,33 @@ echo json_encode($res);
 break;//结束
 
 
+case "user_face":
+$uid= check_token($token)["uid"];
+if (!empty($_FILES)){
+$upload_path = "upload/face/";
+$uploadfile_name = $uid;
+
+//$uploadfile_name = time().strval(rand('1000','9999')); 
+//$uploadfile_name = "123"; 
+
+$i=0;
+foreach ($_FILES as $k=>$v){
+$pics[$i++] = upimg($k,$upload_path,$uploadfile_name."_".$i);
+}
+}else{
+exit('{"success": false,"info":"请选择要上传的图片!"}');
+}
+//echo json_encode($pics);
+kupdate('user','{"uid":"'.$uid.'"}','{"face":"'.$pics[0].'"}',$database);//存
+$res= kselect('user','["uid","nickname","phone","face"]','{"uid":"'.$uid.'"}',$database);
+$res["data"][0]["face"]="http://api.chinavcr.com:8080/rest/".$res["data"][0]["face"];
+
+
+echo json_encode($res);
+break;//结束
+
+    
+    
 
 
 default:
