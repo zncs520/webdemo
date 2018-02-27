@@ -25,3 +25,20 @@ layer
 
 # 后台ui框架
  layui2.2.5
+
+# 目录结构
+
+```
+.
+├── demo.html
+├── restappi  -- 后端服务
+├── webdemo   -- 前端框架
+├── admin.zip -- 后台模板
+├── src
+│   └── ...
+├── .......
+
+```
+
+
+
