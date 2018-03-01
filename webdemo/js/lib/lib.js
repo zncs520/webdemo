@@ -122,7 +122,7 @@ con.style.display = i == cursel ? "block" : "none";
 
 function pushtoken(arr,tokendata) {//跨域推送TOKEN
 for(var i= 0;i<arr.length;i++){
-document.write('<iframe style="display:none;" src="'+arr[i]+'?tokendata='+tokendata+'"></iframe>');
+document.write('<iframe style="display:none;" src="'+arr[i]+'?udata='+tokendata+'&time='+(new Date()).valueOf()+'"></iframe>');
 }
 }
 function Base64() {
