@@ -223,3 +223,39 @@ return string;
 //AA=base.encode("我是谁");
 //base.decode(AA);
 
+
+
+
+function isJSON(str) {
+if (typeof str == 'string') {
+try {
+var obj=JSON.parse(str);
+if(typeof obj == 'object' && obj ){
+return true;
+}else{
+return false;
+}
+
+} catch(e) {
+console.log('error：'+str+'!!!'+e);
+return false;
+}
+}
+console.log('It is not a string!')
+}
+
+function EN_JSON(obj) {
+return JSON.stringify(obj);
+}
+
+function DE_JSON(str) {
+if(isJSON(str){
+return JSON.parse(str);
+}else{
+alert("非对象!");
+}
+}
+
+
+
+
