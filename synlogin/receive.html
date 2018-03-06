@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,9 +9,13 @@
 <body>
 <script type="text/javascript">
 var udata = base64.decode(getUrlParam("udata"));
-store.set('user',udata);
-
-alert(store.get('user'));
+if(getUrlParam("udata")=="loginout"){
+store.clearAll();
+//alert("退出成功!");
+}else{
+store.set('user', udata);
+//alert(store.get('user'));
+}
 </script>
 </body>
 </html>
