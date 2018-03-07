@@ -249,7 +249,7 @@ return JSON.stringify(obj);
 }
 
 function DE_JSON(str) {
-if(isJSON(str){
+if(isJSON(str)){
 return JSON.parse(str);
 }else{
 alert("非对象!");
