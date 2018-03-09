@@ -2,10 +2,9 @@
 //如果需要设置允许所有域名发起的跨域请求，可以使用通配符 *
 header("Access-Control-Allow-Origin: *");
 include("../lib/config.php");
-include("../lib/uppics.php");
 $dotype=explode("/",$_SERVER["REQUEST_URI"])[3]; //接口路径
 switch ($dotype) {
-case "add":
+case "list":
 $res= kselect('user','["uid","nickname"]','{}',$database);
 echo json_encode($res);
 break;//结束
