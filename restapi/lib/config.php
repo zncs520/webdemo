@@ -11,17 +11,24 @@ require_once 'uppics.php';
 require_once 'Medoo.php';
 use Medoo\Medoo;
 //数据库配置-----------------
+// $database = new Medoo([
+// 'database_type' => 'mysql',
+// 'database_name' => 'nb_ucenter',
+// 'server' => 'localhost',
+// 'username' => 'root',
+// 'password' => 'kkkzncs003',
+// 'charset' => 'utf8',
+// 'port' => 3306
+// // 可选，定义表的前缀
+// //'prefix' => 'bbr_',
+// ]);
+//exit(pathinfo(__FILE__)['dirname']);
+
 $database = new Medoo([
-'database_type' => 'mysql',
-'database_name' => 'nb_ucenter',
-'server' => 'localhost',
-'username' => 'root',
-'password' => 'kkkzncs003',
-'charset' => 'utf8',
-'port' => 3306
-// 可选，定义表的前缀
-//'prefix' => 'bbr_',
+'database_type' => 'sqlite',
+'database_file' => pathinfo(__FILE__)['dirname'].'\data.sqlite2'
 ]);
+
 
 
 function mystrtoupper($a){//字母转大写 兼容汉字
@@ -44,7 +51,32 @@ exit('{"success":false,"info":"没有权限!"}');
 
 
 
-
+function 查($tab, $key, $wherestr,$database){
+global $REC;
+$wheretmp =json_decode($wherestr,true);
+if($key != '*'){$key = json_decode($key,true);}
+$filter=json_decode($REC["filter"],true);
+$order=json_decode($REC["order"],true);
+if(empty($filter)){
+$where = $wheretmp;
+}else{
+if(empty($wheretmp)){
+$where = $filter;
+}else{
+$where["AND"]=array_merge($filter,$wheretmp);//合并筛选
+}
+}
+$page=$REC['page'];
+$pagesize=$REC['pagesize'];
+if(empty($page)){$page=1;}//默认第一页
+if(empty($pagesize)){$pagesize=10;}//默认条数
+$count = $database->count($tab, $where);
+$where['LIMIT'] = [($page-1)*$pagesize,$pagesize];//分页
+if(!is_null($order)){$where['ORDER'] = $order;}//排序
+$datas = $database->select($tab, $key, $where);
+// echo json_encode($where);
+return json_decode('{"success":true,"total":'.$count.',"page":'.$page.',"totalpage":'.ceil($count/$pagesize).',"data":'.json_encode($datas).'}',true);
+}
 
 
 
