@@ -257,5 +257,14 @@ alert("非对象!");
 }
 
 
+//数组插入下拉菜单
+function getArray(str){
+return str.split("||");
+}
 
-
+//console.log(getArray("{$Info(9)$}"));
+//var seletarr =getArray("{$Info(9)$}");
+//var obj = document.getElementById("kechengse");
+//for (var i = 0; i < seletarr.length; i++) {
+//obj.options.add(new Option(seletarr[i],seletarr[i]));
+//}
