@@ -268,3 +268,17 @@ return str.split("||");
 //for (var i = 0; i < seletarr.length; i++) {
 //obj.options.add(new Option(seletarr[i],seletarr[i]));
 //}
+
+//合并对象
+function extend(target, source) {
+for (var obj in source) {
+target[obj] = source[obj];
+}
+return target;
+}
+
+// 测试
+var a = {a: 1, b: 2};
+var b = {a: 2, b: 3, c: 4};
+var c = extend(a, b);
+console.log(c);
