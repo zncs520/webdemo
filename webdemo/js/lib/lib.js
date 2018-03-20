@@ -282,3 +282,40 @@ var a = {a: 1, b: 2};
 var b = {a: 2, b: 3, c: 4};
 var c = extend(a, b);
 console.log(c);
+
+
+
+
+
+
+
+
+
+//响应式图片自动缩放
+
+var wrap=document.getElementById("wrapimg");
+var imgs=wrap.getElementsByTagName('img');
+console.log(imgs.length);
+for(var i in imgs){
+imgs[i].index=i;
+if(imgs[i].width > window.screen.width){
+imgs[i].width=window.screen.width*0.9;
+imgs[i].height=imgs[i].naturalHeight*((window.screen.width*0.8)/imgs[i].naturalWidth);	
+}
+//imgs[i].onclick=function(){
+//alert(this.index);
+//console.log(this.index);
+// }
+}
+
+
+
+
+
+
+
+
+
+
+
+
