@@ -300,7 +300,7 @@ for(var i in imgs){
 imgs[i].index=i;
 if(imgs[i].width > window.screen.width){
 imgs[i].width=window.screen.width*0.9;
-imgs[i].height=imgs[i].naturalHeight*((window.screen.width*0.8)/imgs[i].naturalWidth);	
+imgs[i].height=imgs[i].naturalHeight*((window.screen.width*0.9)/imgs[i].naturalWidth);	
 }
 //imgs[i].onclick=function(){
 //alert(this.index);
