@@ -292,8 +292,8 @@ console.log(c);
 
 
 //响应式图片自动缩放
-
-var wrap=document.getElementById("wrapimg");
+function imgwidth(id) {
+var wrap=document.getElementById(id);
 var imgs=wrap.getElementsByTagName('img');
 console.log(imgs.length);
 for(var i in imgs){
@@ -307,9 +307,11 @@ imgs[i].height=imgs[i].naturalHeight*((window.screen.width*0.9)/imgs[i].naturalW
 //console.log(this.index);
 // }
 }
+}
 
-
-
+window.onload = function () {
+imgwidth("divid");
+};
 
 
 
