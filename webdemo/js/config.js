@@ -12,6 +12,7 @@ getjs([
 "vue.filter.js",
 "layer/layer.js",
 "cityselect.js",
+"socket.io.js",
 "lib.js"
 
 
