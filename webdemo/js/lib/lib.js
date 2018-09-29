@@ -285,7 +285,13 @@ console.log(c);
 
 
 
-
+function getarrdata(arr,key,value){//搜索json
+var res=[];
+for (var i=0;i<arr.length;i++){
+if(arr[i][key]==value){res[i]=arr[i]}
+}
+return res;
+}
 
 
 
