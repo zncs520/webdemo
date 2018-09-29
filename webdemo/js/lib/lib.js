@@ -283,16 +283,20 @@ var b = {a: 2, b: 3, c: 4};
 var c = extend(a, b);
 console.log(c);
 
-
-
+//搜索json
+var edata={"data":[
+{"kk":"pp","kk1":"pp1"},
+{"kk":"pp1"},
+{"kk":"pp"}
+]};
 function getarrdata(arr,key,value){//搜索json
-var res=[];
+var res={};
 for (var i=0;i<arr.length;i++){
 if(arr[i][key]==value){res[i]=arr[i]}
 }
 return res;
 }
-
+console.log(getarrdata(edata["data"],"kk","pp"));
 
 
 
