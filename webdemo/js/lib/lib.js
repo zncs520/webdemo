@@ -67,9 +67,9 @@ return res;
 
 /*垃圾X判断*/
 function isIphoneX(){
-	if(/iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)){
-	console.log('垃圾X');
-	}
+if(/iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)){
+console.log('垃圾X');
+}
 //  return  ;
 }
 
@@ -290,13 +290,16 @@ var edata={"data":[
 {"kk":"pp"}
 ]};
 function getarrdata(arr,key,value){//搜索json
-var res={};
+var res=[];
 for (var i=0;i<arr.length;i++){
-if(arr[i][key]==value){res[i]=arr[i]}
+if(arr[i][key]==value){res.push(arr[i])}
 }
 return res;
 }
+var aa=getarrdata(edata["data"],"kk","pp");
+console.log(edata["data"]);
 console.log(getarrdata(edata["data"],"kk","pp"));
+console.log(getarrdata(aa,"kk","pp"));
 
 
 
