@@ -296,10 +296,23 @@ if(arr[i][key]==value){res.push(arr[i])}
 }
 return res;
 }
+
 var aa=getarrdata(edata["data"],"kk","pp");
 console.log(edata["data"]);
 console.log(getarrdata(edata["data"],"kk","pp"));
-console.log(getarrdata(aa,"kk","pp"));
+console.log(getarrdata(aa,"kk1","pp1"));
+
+
+var tj= {"kk":"pp","kk1":"pp1"};//搜索条件
+
+function getdata(arr,obj){//多条件搜索json
+var res=arr;
+for(key in obj){
+res=getarrdata(res,key,obj[key]);
+}
+return res;
+}
+console.log(getdata(edata["data"],tj));
 
 
 
