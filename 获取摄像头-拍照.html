@@ -1,0 +1,39 @@
+
+<!doctype html>
+<html>
+<head>
+<title>GET VIDEO</title>
+<meta charset="utf-8">
+<style type="text/css">
+body{margin:0;padding:0;}
+</style>
+</head>
+<body>
+<video id="video" width="320px" height="240px" autoplay="autoplay"></video>
+<canvas id="canvas" width="500px" height="500px"></canvas>
+<script>
+function getMedia() {//获得video摄像头区域
+let constraints = {
+video: {width: 320, height: 240},
+audio: false
+};
+let video = document.getElementById("video");
+let promise = navigator.mediaDevices.getUserMedia(constraints);
+promise.then(function (MediaStream) {
+video.srcObject = MediaStream;
+video.play();
+});
+}
+
+function takePhoto() {//获得Canvas对象
+let video = document.getElementById("video");
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext('2d');
+ctx.drawImage(video, 0, 0, 500, 500);
+}
+
+getMedia();
+takePhoto();
+</script>
+</body>
+</html>

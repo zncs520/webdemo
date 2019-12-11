@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="js/config.js">//引入框架</script>
+</head>
+<body>
+<script>
+httpx.get("http://ai.namenb.com/toolbox/weather/",{}, function(data) {var res=JSON.parse(data)["results"][0];MsgTts("今天"+res["weather_data"][0]["date"]);});
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+
+<!doctype html>
+<html>
+<head>
+<title>GET VIDEO</title>
+<meta charset="utf-8">
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script src="http://static.namenb.com/web/js/?tcbox" type="text/javascript"></script>
+<style type="text/css">
+body{margin:0;padding:0;background-color:#333;-webkit-app-region: drag;cursor: move;}
+</style>
+</head>
+<body>
+<video id="videoface" width="320px" height="240px" autoplay="autoplay" muted></video>
+<img src="airplay.png"><audio class="recPlay" style="width:100%"></audio>
+<script>
+function getMedia() {//获得video摄像头区域
+let constraints = {
+video: {width: 320, height: 240},
+audio: true
+};
+let video = document.getElementById("videoface");
+let promise = navigator.mediaDevices.getUserMedia(constraints);
+promise.then(function (MediaStream) {
+video.srcObject = MediaStream;
+video.play();
+
+});
+}
+getMedia();
+
+navigator.getUserMedia({ audio: true, video: true }, (stream) => {beginDetect(stream);}, () => {msg(mv);});
+function beginDetect(stream){
+var audioContext = new AudioContext();
+// 将麦克风的声音输入这个对象
+mediaStreamSource = audioContext.createMediaStreamSource(stream);
+// 创建一个音频分析对象，采样的缓冲区大小为4096，输入和输出都是单声道
+scriptProcessor = audioContext.createScriptProcessor(4096,1,1);
+// 将该分析对象与麦克风音频进行连接
+mediaStreamSource.connect(scriptProcessor);
+// 此举无甚效果，仅仅是因为解决 Chrome 自身的 bug
+scriptProcessor.connect(audioContext.destination);
+// 开始处理音频
+scriptProcessor.onaudioprocess = (e) => {
+// 获得缓冲区的输入音频，转换为包含了PCM通道数据的32位浮点数组
+const buffer = e.inputBuffer.getChannelData(0);
+// 获取缓冲区中最大的音量值
+const maxVal = Math.max(...buffer);
+// 显示音量值
+const mv = Math.round(maxVal * 100);
+//msg(mv);
+if(mv>80){
+//当音量值大于80时，显示“声音太响”字样，并断开音频连接
+//msg("识别中....");
+mediaStreamSource.disconnect(scriptProcessor);
+recstart();
+
+setTimeout(function(){
+recstop();
+msg("识别l....");
+mediaStreamSource.connect(scriptProcessor);
+}, 5 * 1000 );
+}
+}
+}
+
+
+
+
+
+
+
+
+function RandomKey(){
+return "randomkey"+(RandomKey.idx++);
+};
+RandomKey.idx=0;
+
+
+
+var set={type:"mp3",bitRate:16,sampleRate:16000,bufferSize:8192};
+var rec=Recorder(set);
+
+function recopen(){
+rec.open(function(){
+rec.start();
+},function(msg){
+msg("无法录音:"+msg);
+});
+}
+recopen();
+
+function recclose(){
+if(rec){
+rec.close(function(){
+msg("已关闭");
+});
+}
+}
+
+function recstart(){
+if(rec){
+rec.start();
+msg("录制中...");
+};
+};
+var intp=function(s,len){
+	s=s==null?"-":s+"";
+	if(s.length>=len)return s;
+	return ("_______"+s).substr(-len);
+};
+var recblob={};
+function recstop(batCall){
+if(rec){
+if(!batCall){
+	msg("正在编码"+rec.set.type+"...");
+};
+var t1=Date.now();
+rec.stop(function(blob,time){
+var id=RandomKey(16);
+recblob[id]={blob:blob,set:$.extend({},rec.set),time:time};
+msg("已录制:"+intp(rec.set.bitRate,3)+"kbps "+intp(rec.set.sampleRate,5)+"hz 花"+intp(Date.now()-t1,4)+"ms编码"+intp(blob.size,6)+"b ["+rec.set.type+"]"+intp(time,6)+'ms <button onclick="recdown(\''+id+'\')">下载</button> <button onclick="recplay(\''+id+'\')">播放</button> <span class="p'+id+'"></span> <span class="d'+id+'"></span>');
+batCall&&batCall();
+},function(s){
+msg("失败："+s);
+batCall&&batCall();
+});
+};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function recplay(key){
+	var o=recblob[key];
+	if(o){
+		var audio=$(".recPlay")[0];
+		audio.controls=true;
+		if(!(audio.ended || audio.paused)){
+			audio.pause();
+		};
+		o.play=(o.play||0)+1;
+		var logmsg=function(msg){
+			$(".p"+key).html('<span style="color:green">'+o.play+'</span> '+new Date().toLocaleTimeString()+" "+msg);
+		};
+		logmsg("");
+		
+		var end=function(blob){
+			audio.src=URL.createObjectURL(blob);
+			audio.play();
+		};
+		var wav=Recorder[o.set.type+"2wav"];
+		if(wav){
+			logmsg("正在转码成wav...");
+			wav(o.blob,function(blob){
+				end(blob);
+				logmsg("已转码成wav播放");
+			},function(msg){
+				logmsg("转码成wav失败："+msg);
+			});
+		}else{
+			end(o.blob);
+		};
+	};
+};
+function recdown(key){
+	var o=recblob[key];
+	if(o){
+		var cls=RandomKey(16);
+		var name="rec-"+o.time+"ms-"+o.set.bitRate+"kbps-"+o.set.sampleRate+"hz."+o.set.type;
+		
+		o.down=(o.down||0)+1;
+		$(".d"+key).html('<span style="color:red">'+o.down+'</span> <span class="'+cls+'"> 没弹下载？试一下链接或复制文本<button onclick="recdown64(\''+key+'\',\''+cls+'\')">生成Base64文本</button></span>');
+		
+		var downA=document.createElement("A");
+		downA.innerHTML="下载 "+name;
+		downA.href=URL.createObjectURL(o.blob);
+		downA.download=name;
+		$("."+cls).prepend(downA);
+		downA.click();
+	};
+};
+function recdown64(key, cls){
+	var o=recblob[key];
+	
+	var reader = new FileReader();
+	reader.onloadend = function() {
+		var id=RandomKey(16);
+		$("."+cls).append('<textarea class="'+id+'"></textarea>');
+		$("."+id).val(reader.result);
+	};
+	reader.readAsDataURL(o.blob);
+};
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="js/config.js">//引入框架</script>
+</head>
+<style type="text/css">
+.con{display:none;
+animation: 2s opacity2 0s 1; }
+@keyframes opacity2{
+0%{opacity:0}
+100%{opacity:.8;}
+}
+
+
+
+
+</style>
+<body>
+
+
+<div class="con" id="contab_1">
+主界面 <a onclick='setTab(2, 4, "con");'>界面1</a><a onclick='setTab(3, 4, "con");'>界面2</a><a onclick='setTab(4, 4, "con");'>界面3</a>
+</div>
+<div class="con" id="contab_2">
+界面1
+<div onclick='layervideo("http://vjs.zencdn.net/v/oceans.mp4","视频标题");'>打开视频</div>
+<a onclick='setTab(1, 4, "con");'>返回</a>
+</div>
+<div class="con" id="contab_3">
+界面2 <a onclick='setTab(1, 4, "con");'>返回</a>
+
+
+<div id="kimages">
+<img src="https://www.baidu.com/img/bd_logo1.png" data-big="https://www.baidu.com/img/bd_logo1.png" alt="11">
+<img src="https://www.baidu.com/img/bd_logo1.png" data-big="https://www.baidu.com/img/bd_logo1.png" alt="11">
+</div>
+
+</div>
+<div class="con" id="contab_4">
+界面3 <a onclick='setTab(1, 4, "con");'>返回</a>
+</div>
+
+<script>
+setTab(1, 4, "con");
+
+
+var kphoto=new Viewer(document.getElementById("kimages"),{url:"data-big",movable:true,
+toolbar: {
+zoomIn: {show:1,size:"large"},
+zoomOut:{show:1,size:"large"},
+oneToOne: {show:1,size:"large"},
+reset: 0,
+prev: {show:1,size:"large"},
+play: 0,
+next: {show:1,size:"large"},
+rotateLeft: {show:1,size:"large"},
+rotateRight: 0,
+flipHorizontal: 1,
+flipVertical: 0,
+},
+navbar:false
+});
+
+
+</script>
+</body>
+</html>
